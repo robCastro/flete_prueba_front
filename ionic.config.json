@@ -1,0 +1,7 @@
+{
+  "name": "flete_front",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
