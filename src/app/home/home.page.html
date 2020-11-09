@@ -1,20 +1,136 @@
-<ion-header [translucent]="true">
+<ion-header color="primary">
   <ion-toolbar>
     <ion-title>
-      Blank
+      Cotización de Servicio
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      
+      <ion-col
+        sizeXl="4"
+        sizeMd="8"
+        sizeSm="10"
+        size="12"
+        class="ion-align-self-center"
+      >
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Formulario de Cotización</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+            <form (ngSubmit)="enviar()">
+              <ion-item>
+                <ion-label position="floating">Nombre</ion-label>
+                <ion-input name="nombre" [(ngModel)]="cotizacion.nombre"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Correo</ion-label>
+                <ion-input name="email" [(ngModel)]="cotizacion.correo" type="email"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Tipo de Producto</ion-label>
+                <ion-select
+                  name="tipoProducto"
+                  
+                  (ionChange)="cambioDeTipo($event)"
+                >
+                  <ion-select-option
+                    *ngFor="let tipo of tiposProductos"
+                    value="{{tipo.codTipoProducto}}"
+                  >
+                    {{tipo.nombreTipoProducto}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Peso de articulo (lbs)</ion-label>
+                <ion-input name="peso" [(ngModel)]="cotizacion.peso" type="number"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Costo según factura ($)</ion-label>
+                <ion-input name="costo" [(ngModel)]="cotizacion.costo" type="number"></ion-input>
+              </ion-item>
+              <ion-button color="primary" type="submit">Cotizar</ion-button>
+            </form>
+
+          </ion-card-content>
+        </ion-card>        
+      </ion-col>
+
+      <ion-col
+        sizeXl="4"
+        sizeMd="8"
+        sizeSm="10"
+        size="12"
+      >
+        <ion-card *ngIf="procesado">
+          <ion-card-header>
+            <ion-card-title>Resultado</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-list>
+              <ion-item>
+                <ion-label>Cliente</ion-label>
+                {{cotizacion.nombre}}
+              </ion-item>
+              <ion-item>
+                <ion-label>Contacto</ion-label>
+                {{cotizacion.correo}}
+              </ion-item>
+              <ion-item>
+                <ion-label>Tipo de Producto</ion-label>
+                {{cotizacion.tipoProducto.nombreTipoProducto}}
+              </ion-item>
+              <ion-item>
+                <ion-label>Peso</ion-label>
+                <ion-badge>{{cotizacion.peso}} lbs</ion-badge>
+              </ion-item>
+              <ion-item>
+                <ion-label>Costo</ion-label>
+                <ion-badge>$ {{cotizacion.costo}}</ion-badge>
+              </ion-item>
+              <ion-item>
+                <ion-label>Flete</ion-label>
+                <ion-badge>$ {{resultado.flete}}</ion-badge>
+              </ion-item>
+              <ion-item>
+                <ion-label>Combustible</ion-label>
+                <ion-badge>$ {{resultado.combustible}}</ion-badge>
+              </ion-item>
+              <ion-item>
+                <ion-label>Seguro</ion-label>
+                <ion-badge>$ {{resultado.seguro}}</ion-badge>
+              </ion-item>
+              <ion-item>
+                <ion-label>Aduanas</ion-label>
+                <ion-badge>$ {{resultado.aduanas}}</ion-badge>
+              </ion-item>
+              <ion-item>
+                <ion-label>Impuestos</ion-label>
+                <ion-badge>$ {{resultado.impuestos}}</ion-badge>
+              </ion-item>
+              <ion-item>
+                <ion-label>IVA</ion-label>
+                <ion-badge>$ {{resultado.iva}}</ion-badge>
+              </ion-item>
+              <ion-item>
+                <ion-label>Cargos Importación</ion-label>
+                <ion-badge>$ {{resultado.cargos}}</ion-badge>
+              </ion-item>
+              <ion-item>
+                <ion-label>Total a Apagar</ion-label>
+                <ion-badge>$ {{resultado.total}}</ion-badge>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
 </ion-content>
